@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendataan Pasien Pet Clinic</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #00b4d8;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+            height: fit-content;
+        }
+
+        .card h2 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #0077b6;
+            border-bottom: 2px solid #e0fbfc;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #00b4d8;
+        }
+
+        .btn {
+            background-color: #0077b6;
+            color: white;
+            border: none;
+            padding: 0.7rem;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background-color: #03045e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #edf2f7;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #caf0f8;
+            color: #03045e;
+        }
+
+        .btn-hapus {
+            background-color: #ef233c;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .btn-hapus:hover {
+            background-color: #d90429;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #fff;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #718096;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1> PawCare - Pendataan Klinik Hewan</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>Registrasi Pasien Baru</h2>
+            <form id="petForm">
+                <div class="form-group">
+                    <label for="petName">Nama Hewan</label>
+                    <input type="text" id="petName" placeholder="Contoh: Miko / Chiko" required>
+                </div>
+                <div class="form-group">
+                    <label for="petType">Jenis Hewan</label>
+                    <select id="petType" required>
+                        <option value="">-- Pilih Jenis --</option>
+                        <option value="Kucing">Kucing</option>
+                        <option value="Anjing">Anjing</option>
+                        <option value="Kelinci">Kelinci</option>
+                        <option value="Burung">Burung</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ownerName">Nama Pemilik</label>
+                    <input type="text" id="ownerName" placeholder="Contoh: Azmi" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Layanan</label>
+                    <select id="service" required>
+                        <option value="">-- Pilih Layanan --</option>
+                        <option value="Vaksinasi">Vaksinasi</option>
+                        <option value="Check-up Sehat">Check-up Sehat</option>
+                        <option value="Grooming / Mandi">Grooming / Mandi</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Daftarkan Pasien</button>
+            </form>
+        </div>
+
+    
+        <div class="card" style="max-width: 550px;">
+            <h2>Daftar Antrean Pasien</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama Hewan</th>
+                        <th>Jenis</th>
+                        <th>Pemilik</th>
+                        <th>Layanan</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    
+                    <tr>
+                        <td>Milo</td>
+                        <td>Kucing</td>
+                        <td>Alam</td>
+                        <td>Check-up Sehat</td>
+                        <td><button class="btn-hapus" onclick="hapusBaris(this)">Hapus</button></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Rocky</td>
+                        <td>Anjing</td>
+                        <td>Siska</td>
+                        <td>Vaksinasi</td>
+                        <td><button class="btn-hapus" onclick="hapusBaris(this)">Hapus</button></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Mochi</td>
+                        <td>Kelinci</td>
+                        <td>Budi</td>
+                        <td>Grooming / Mandi</td>
+                        <td><button class="btn-hapus" onclick="hapusBaris(this)">Hapus</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Tugas UTS Pemrograman Web - Klinik Hewan</p>
+    </footer>
+
+    <script>
+        const petForm = document.getElementById('petForm');
+        const tableBody = document.getElementById('tableBody');
+
+        petForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const petName = document.getElementById('petName').value;
+            const petType = document.getElementById('petType').value;
+            const ownerName = document.getElementById('ownerName').value;
+            const service = document.getElementById('service').value;
+
+            const barisBaru = document.createElement('tr');
+            barisBaru.innerHTML = `
+                <td>${petName}</td>
+                <td>${petType}</td>
+                <td>${ownerName}</td>
+                <td>${service}</td>
+                <td><button class="btn-hapus" onclick="hapusBaris(this)">Hapus</button></td>
+            `;
+
+            tableBody.appendChild(barisBaru);
+            petForm.reset();
+        });
+
+        function hapusBaris(button) {
+            const baris = button.parentElement.parentElement;
+            baris.remove();
+        }
+    </script>
+</body>
+</html>
